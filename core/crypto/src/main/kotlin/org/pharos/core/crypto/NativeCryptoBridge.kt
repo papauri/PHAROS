@@ -8,7 +8,7 @@ object NativeCryptoBridge {
     val isNativeLoaded: Boolean = try {
         System.loadLibrary("pharos_crypto")
         true
-    } catch (_: UnsatisfiedLinkError) {
+    } catch (_: Throwable) {
         false
     }
 
@@ -17,6 +17,15 @@ object NativeCryptoBridge {
 
     @JvmStatic
     external fun nativeSecureZeroize(buffer: ByteArray)
+
+    fun xChaCha20XorSafe(key32: ByteArray, nonce24: ByteArray, input: ByteArray): ByteArray? {
+        if (!isNativeLoaded) return null
+        return try {
+            nativeXChaCha20Xor(key32, nonce24, input)
+        } catch (_: Throwable) {
+            null
+        }
+    }
 
     fun secureZeroize(vararg buffers: ByteArray?) {
         for (buf in buffers) {

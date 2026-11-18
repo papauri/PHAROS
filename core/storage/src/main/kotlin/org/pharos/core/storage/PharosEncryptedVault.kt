@@ -61,7 +61,11 @@ class PharosEncryptedVault(
     )
 
     private val encryptedRows = CopyOnWriteArrayList<EncryptedCardRow>()
-    private val sqliteHelper: WalSqliteHelper? = context?.let { WalSqliteHelper(it) }
+    private val sqliteHelper: WalSqliteHelper? = try {
+        context?.let { WalSqliteHelper(it.applicationContext ?: it) }
+    } catch (_: Throwable) {
+        null
+    }
 
     /**
      * Stores a [TacticalCard] encrypted with XChaCha20-Poly1305 in WAL storage.
@@ -223,23 +227,36 @@ class PharosEncryptedVault(
 
         override fun onConfigure(db: SQLiteDatabase) {
             super.onConfigure(db)
-            db.enableWriteAheadLogging()
-            db.execSQL("PRAGMA synchronous=FULL;")
-            db.execSQL("PRAGMA secure_delete=ON;")
+            try {
+                db.enableWriteAheadLogging()
+            } catch (_: Throwable) {
+            }
+        }
+
+        override fun onOpen(db: SQLiteDatabase) {
+            super.onOpen(db)
+            try {
+                db.rawQuery("PRAGMA synchronous=FULL;", null)?.close()
+                db.rawQuery("PRAGMA secure_delete=ON;", null)?.close()
+            } catch (_: Throwable) {
+            }
         }
 
         override fun onCreate(db: SQLiteDatabase) {
-            db.execSQL(
-                """
-                CREATE TABLE IF NOT EXISTS encrypted_cards (
-                    card_id INTEGER PRIMARY KEY,
-                    is_verified INTEGER NOT NULL,
-                    nonce24 BLOB NOT NULL,
-                    ciphertext200 BLOB NOT NULL,
-                    tag16 BLOB NOT NULL
+            try {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS encrypted_cards (
+                        card_id INTEGER PRIMARY KEY,
+                        is_verified INTEGER NOT NULL,
+                        nonce24 BLOB NOT NULL,
+                        ciphertext200 BLOB NOT NULL,
+                        tag16 BLOB NOT NULL
+                    )
+                    """.trimIndent()
                 )
-                """.trimIndent()
-            )
+            } catch (_: Throwable) {
+            }
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
@@ -251,15 +268,20 @@ class PharosEncryptedVault(
             ciphertext200: ByteArray,
             tag16: ByteArray
         ) {
-            writableDatabase.execSQL(
-                "INSERT OR REPLACE INTO encrypted_cards (card_id, is_verified, nonce24, ciphertext200, tag16) VALUES (?, ?, ?, ?, ?)",
-                arrayOf<Any>(cardId, if (isVerified) 1 else 0, nonce24, ciphertext200, tag16)
-            )
+            try {
+                writableDatabase.execSQL(
+                    "INSERT OR REPLACE INTO encrypted_cards (card_id, is_verified, nonce24, ciphertext200, tag16) VALUES (?, ?, ?, ?, ?)",
+                    arrayOf<Any>(cardId, if (isVerified) 1 else 0, nonce24, ciphertext200, tag16)
+                )
+            } catch (_: Throwable) {
+            }
         }
 
         fun wipeAllTables() {
-            writableDatabase.execSQL("DELETE FROM encrypted_cards;")
-            writableDatabase.execSQL("VACUUM;")
+            try {
+                writableDatabase.execSQL("DELETE FROM encrypted_cards;")
+            } catch (_: Throwable) {
+            }
         }
     }
 }

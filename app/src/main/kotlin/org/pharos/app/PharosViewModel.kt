@@ -39,7 +39,7 @@ import java.io.File
 import kotlin.math.PI
 import kotlin.math.sin
 
-enum class TacticalTab { BEAM, PULSE, BRIDGE }
+enum class TacticalTab { BEAM, PULSE, BRIDGE, SURVIVAL }
 enum class DndStealthMode { NORMAL_TACTICAL, GHOST_HAPTIC_MORSE, CRITICAL_OVERRIDE_DND }
 
 data class PharosUiState(
@@ -622,6 +622,9 @@ class PharosViewModel(private val appContext: Context? = null) : ViewModel() {
     fun submitVaultPin(pin: String): PharosEncryptedVault.PinUnlockResult {
         val result = vault.authenticatePin(pin)
         refreshFeedsAndCounters()
+        if (result == PharosEncryptedVault.PinUnlockResult.TRIGGERED_DURESS_DECOY_MODE) {
+            _uiState.update { it.copy(selectedTab = TacticalTab.SURVIVAL) }
+        }
         return result
     }
 

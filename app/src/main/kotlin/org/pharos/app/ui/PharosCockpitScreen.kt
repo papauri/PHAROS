@@ -15,10 +15,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import org.pharos.app.data.SurvivalCodexRepository
+import org.pharos.app.data.SurvivalGuideEntry
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -124,6 +127,9 @@ fun PharosCockpitScreen(
                             onPairPhrase = { phrase -> viewModel.runSpake2MemoryPairing(phrase) },
                             onCycleDnd = { viewModel.cycleDndStealthMode() },
                             onOpenDndSettings = onOpenDndPolicySettings
+                        )
+                        TacticalTab.SURVIVAL -> SimpleSurvivalManualTab(
+                            palette = palette
                         )
                     }
                 }
@@ -568,14 +574,15 @@ private fun SimpleBottomBar(
     val labels = mapOf(
         TacticalTab.BEAM to "Light",
         TacticalTab.PULSE to "Messages",
-        TacticalTab.BRIDGE to "Radio & Share"
+        TacticalTab.BRIDGE to "Radio",
+        TacticalTab.SURVIVAL to "Manual"
     )
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Black)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         TacticalTab.entries.forEach { tab ->
             val selected = tab == selectedTab
@@ -583,7 +590,7 @@ private fun SimpleBottomBar(
                 onClick = { onSelectTab(tab) },
                 modifier = Modifier
                     .weight(1f)
-                    .height(54.dp),
+                    .height(52.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (selected) palette.primarySignal else palette.surfaceDark,
                     contentColor = if (selected) Color.Black else palette.textPrimary
@@ -592,7 +599,7 @@ private fun SimpleBottomBar(
                 Text(
                     text = labels[tab] ?: tab.name,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    fontSize = 12.sp
                 )
             }
         }
@@ -1037,6 +1044,139 @@ private fun SimpleBridgeTab(
                     color = palette.textPrimary,
                     fontSize = 12.sp
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SimpleSurvivalManualTab(
+    palette: NightOpsPalette
+) {
+    var searchQuery by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf("All") }
+    var expandedId by remember { mutableStateOf<String?>("grid_down_60m") }
+
+    val filteredEntries = remember(searchQuery, selectedCategory) {
+        SurvivalCodexRepository.entries.filter { entry ->
+            val matchesCat = selectedCategory == "All" || entry.category == selectedCategory
+            val q = searchQuery.trim().lowercase()
+            val matchesQuery = q.isEmpty() ||
+                entry.title.lowercase().contains(q) ||
+                entry.summary.lowercase().contains(q) ||
+                entry.exactFormulasOrRatios.lowercase().contains(q) ||
+                entry.criticalSteps.any { it.lowercase().contains(q) }
+            matchesCat && matchesQuery
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            placeholder = { Text("Search survival manual (water, bleach, tourniquet, nuclear, fire...)", fontSize = 13.sp) },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            SurvivalCodexRepository.categories.forEach { cat ->
+                val sel = cat == selectedCategory
+                OutlinedButton(
+                    onClick = { selectedCategory = cat },
+                    modifier = Modifier.height(36.dp)
+                ) {
+                    Text(
+                        text = cat,
+                        color = if (sel) palette.primarySignal else palette.mutedText,
+                        fontWeight = if (sel) FontWeight.Bold else FontWeight.Normal,
+                        fontSize = 12.sp
+                    )
+                }
+            }
+        }
+
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            items(filteredEntries, key = { it.id }) { entry ->
+                val isExpanded = expandedId == entry.id
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(palette.surfaceDark)
+                        .border(1.dp, if (isExpanded) palette.primarySignal else palette.borderStroke)
+                        .clickable { expandedId = if (isExpanded) null else entry.id }
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = entry.category.uppercase(),
+                            color = palette.secondaryAmber,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 11.sp
+                        )
+                        Text(
+                            text = if (isExpanded) "Hide ▲" else "Read ▼",
+                            color = palette.mutedText,
+                            fontSize = 12.sp
+                        )
+                    }
+                    Text(
+                        text = entry.title,
+                        color = palette.textPrimary,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = entry.summary,
+                        color = palette.mutedText,
+                        fontSize = 13.sp
+                    )
+                    if (isExpanded) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        entry.criticalSteps.forEach { step ->
+                            Text(
+                                text = step,
+                                color = palette.textPrimary,
+                                fontSize = 13.sp,
+                                lineHeight = 19.sp
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Black)
+                                .border(1.dp, palette.secondaryAmber)
+                                .padding(10.dp)
+                        ) {
+                            Text(
+                                text = entry.exactFormulasOrRatios,
+                                color = palette.verifiedGreen,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                                lineHeight = 18.sp
+                            )
+                        }
+                    }
+                }
             }
         }
     }

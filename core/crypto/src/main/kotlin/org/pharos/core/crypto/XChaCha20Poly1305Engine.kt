@@ -206,12 +206,8 @@ object XChaCha20Poly1305Engine {
         val polyKeyBlock = chaCha20Block(subkey, 0, chachaNonce12)
         val polyKey32 = polyKeyBlock.copyOfRange(0, 32)
 
-        val ciphertext = if (NativeCryptoBridge.isNativeLoaded) {
-            NativeCryptoBridge.nativeXChaCha20Xor(key32, nonce24, plaintext)
-                ?: chaCha20Xor(subkey, 1, chachaNonce12, plaintext)
-        } else {
-            chaCha20Xor(subkey, 1, chachaNonce12, plaintext)
-        }
+        val ciphertext = NativeCryptoBridge.xChaCha20XorSafe(key32, nonce24, plaintext)
+            ?: chaCha20Xor(subkey, 1, chachaNonce12, plaintext)
 
         val aeadInput = buildPoly1305AeadInput(associatedData, ciphertext)
         val tag16 = poly1305Mac(aeadInput, polyKey32)
@@ -249,12 +245,8 @@ object XChaCha20Poly1305Engine {
             return null
         }
 
-        val plaintext = if (NativeCryptoBridge.isNativeLoaded) {
-            NativeCryptoBridge.nativeXChaCha20Xor(key32, nonce24, ciphertext)
-                ?: chaCha20Xor(subkey, 1, chachaNonce12, ciphertext)
-        } else {
-            chaCha20Xor(subkey, 1, chachaNonce12, ciphertext)
-        }
+        val plaintext = NativeCryptoBridge.xChaCha20XorSafe(key32, nonce24, ciphertext)
+            ?: chaCha20Xor(subkey, 1, chachaNonce12, ciphertext)
 
         NativeCryptoBridge.secureZeroize(subkey, polyKeyBlock, polyKey32)
         return plaintext
