@@ -1,6 +1,7 @@
 # PHAROS — Multi-Agent Swarm Architecture & Ownership Rules
 
 ## 1. Global Invariants
+- **Always Commit & Push to `main`:** Every change, build, or update must be committed and pushed directly to `origin/main` (`https://github.com/papauri/PHAROS.git`).
 - **Zero Cloud / Zero Internet:** Never add `android.permission.INTERNET` to any module manifest.
 - **16 KB ELF Page Alignment:** All C++20 NDK libraries (`:core:crypto`, `:core:optical`, `:core:audio`) must retain `-Wl,-z,max-page-size=16384` and `-Wl,-z,common-page-size=16384`.
 - **Simplified Field UI:** Keep `:app` UI ([PharosCockpitScreen.kt](app/src/main/kotlin/org/pharos/app/ui/PharosCockpitScreen.kt)) utilitarian, high-contrast (`#000000` OLED + `660nm` Red Mode), and free of jargon or decorative clutter, preserving the 8-step interactive first-launch walkthrough with spotlight pointers.
