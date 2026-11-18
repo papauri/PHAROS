@@ -11,7 +11,7 @@ object NativeOpticalProcessor {
     val isNativeLoaded: Boolean = try {
         System.loadLibrary("pharos_optical")
         true
-    } catch (_: UnsatisfiedLinkError) {
+    } catch (_: Throwable) {
         false
     }
 

@@ -15,7 +15,7 @@ object NativeDspBridge {
     val isNativeLoaded: Boolean = try {
         System.loadLibrary("pharos_dsp")
         true
-    } catch (_: UnsatisfiedLinkError) {
+    } catch (_: Throwable) {
         false
     }
 
