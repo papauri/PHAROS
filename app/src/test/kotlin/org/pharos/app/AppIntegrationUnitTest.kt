@@ -30,10 +30,10 @@ class AppIntegrationUnitTest {
         assertNotNull("MainActivity must launch without crashing", activity)
         assertFalse(activity.isFinishing)
 
-        // Also verify SurvivalCodexRepository has all 9 offline survival guides populated
-        assertEquals(9, SurvivalCodexRepository.entries.size)
+        // Also verify SurvivalCodexRepository has all 17 offline survival guides populated
+        assertEquals(17, SurvivalCodexRepository.entries.size)
         assertTrue(SurvivalCodexRepository.entries.any { it.id == "grid_down_60m" })
-        assertTrue(SurvivalCodexRepository.entries.any { it.id == "cbrn_nuclear_gas" })
+        assertTrue(SurvivalCodexRepository.entries.any { it.id == "cbrn_nuclear_fallout" })
         controller.pause().stop().destroy()
     }
 
