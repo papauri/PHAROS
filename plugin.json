@@ -1,0 +1,18 @@
+{
+  "name": "pharos",
+  "displayName": "PHAROS Off-Grid Survival Mesh",
+  "version": "1.0.0",
+  "description": "Zero-internet Android survival communicator with C++20 NDK optical modem (4-PPM & 4x4 matrix), passive GNSS Firefly mesh, and 16-MFSK/DTMF walkie-talkie audio bridge.",
+  "logo": "assets/logo.svg",
+  "author": {
+    "name": "papauri",
+    "url": "https://github.com/papauri/PHAROS"
+  },
+  "homepage": "https://github.com/papauri/PHAROS",
+  "repository": "https://github.com/papauri/PHAROS",
+  "suggestedPrompts": [
+    "Build and verify PHAROS standalone universal APK and Play Store AAB",
+    "Run the PHAROS 16 KB ELF page-alignment and zero-internet manifest audits",
+    "Test the PHAROS multi-node optical, Firefly mesh, and 5 dB SNR walkie-talkie pipeline"
+  ]
+}

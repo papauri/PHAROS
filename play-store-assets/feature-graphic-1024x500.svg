@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <rect width="1024" height="500" fill="#000000"/>
+  <!-- Tactical Grid Background -->
+  <g stroke="#220808" stroke-width="1">
+    <line x1="0" y1="100" x2="1024" y2="100"/>
+    <line x1="0" y1="250" x2="1024" y2="250"/>
+    <line x1="0" y1="400" x2="1024" y2="400"/>
+    <line x1="256" y1="0" x2="256" y2="500"/>
+    <line x1="512" y1="0" x2="512" y2="500"/>
+    <line x1="768" y1="0" x2="768" y2="500"/>
+  </g>
+  <!-- Lighthouse Optical Beam Cone -->
+  <polygon points="220,250 980,40 980,460" fill="#ff2a2a" fill-opacity="0.14"/>
+  <polygon points="220,250 980,130 980,370" fill="#ffb000" fill-opacity="0.18"/>
+  <!-- Aiming Reticle Ring -->
+  <circle cx="220" cy="250" r="140" fill="none" stroke="#ff2a2a" stroke-width="4"/>
+  <circle cx="220" cy="250" r="95" fill="none" stroke="#ffb000" stroke-width="2" stroke-dasharray="10,6"/>
+  <circle cx="220" cy="250" r="18" fill="#ffb000"/>
+  <!-- Headline Copy -->
+  <text x="410" y="175" fill="#ff2a2a" font-family="monospace" font-size="64" font-weight="bold">PHAROS</text>
+  <text x="410" y="230" fill="#ffb000" font-family="monospace" font-size="26" font-weight="bold">OFF-GRID SURVIVAL COMMUNICATOR</text>
+  <text x="410" y="290" fill="#00e676" font-family="monospace" font-size="20">• 5 KM FLASHLIGHT OPTICAL MODEM (4-PPM &amp; 4x4)</text>
+  <text x="410" y="330" fill="#00e676" font-family="monospace" font-size="20">• GPS-SYNCED 15m/15s FIREFLY DELAY-TOLERANT MESH</text>
+  <text x="410" y="370" fill="#00e676" font-family="monospace" font-size="20">• WALKIE-TALKIE MFSK &amp; NOKIA 3310 DTMF BRIDGE</text>
+  <text x="410" y="425" fill="#ffffff" font-family="monospace" font-size="18">[ZERO INTERNET PERMISSION // XChaCha20-Poly1305 // STRONGBOX]</text>
+</svg>

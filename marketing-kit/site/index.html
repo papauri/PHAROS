@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PHAROS — Off-Grid Optical, Radio &amp; Firefly Mesh Communicator</title>
+  <style>
+    :root { --bg: #000000; --red: #ff2a2a; --amber: #ffb000; --green: #00e676; --card: #0b0b0b; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: #f0f0f0; font-family: monospace; line-height: 1.6; padding: 24px; max-width: 980px; margin: 0 auto; }
+    header { border-bottom: 2px solid var(--red); padding-bottom: 16px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .hero { background: #0c0404; border: 1px solid var(--red); padding: 28px; margin-bottom: 28px; }
+    h1 { color: var(--red); font-size: 36px; letter-spacing: 2px; }
+    h2 { color: var(--amber); font-size: 20px; margin-bottom: 10px; }
+    .cta-row { display: flex; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-primary { background: var(--red); color: #000; font-weight: bold; padding: 14px 22px; text-decoration: none; border: 1px solid var(--red); }
+    .btn-secondary { background: #000; color: var(--amber); font-weight: bold; padding: 14px 22px; text-decoration: none; border: 1px solid var(--amber); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .card { background: var(--card); border: 1px solid #331111; padding: 18px; }
+    .sha-box { background: #080808; border: 1px dashed var(--green); padding: 14px; font-size: 12px; color: var(--green); word-break: break-all; margin-top: 16px; }
+    footer { border-top: 1px solid #222; padding-top: 16px; font-size: 12px; color: #888; display: flex; justify-content: space-between; }
+    a { color: var(--amber); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>PHAROS</h1>
+      <div style="color:var(--amber);font-size:13px;">ZERO-INTERNET // ZERO-CLOUD // SILICON-LOCKED SURVIVAL MESH</div>
+    </div>
+    <div style="border:1px solid var(--green);color:var(--green);padding:6px 12px;font-size:12px;">
+      targetSdk 36 &bull; minSdk 23 &bull; 16 KB ELF Verified
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>WHEN TOWERS FALL, COMMUNICATE WITH LIGHT, SOUND &amp; ATOMIC CLOCKS.</h2>
+    <p>PHAROS turns any Android 6.0–16 phone into an off-grid survival transceiver. Built with <strong>zero</strong> <code>android.permission.INTERNET</code> in its manifest—making cloud surveillance or remote telemetry physically impossible.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="#playstore">GET IT ON GOOGLE PLAY (.AAB)</a>
+      <a class="btn-secondary" href="app-standalone-universal-release.apk">DOWNLOAD UNIVERSAL STANDALONE .APK</a>
+    </div>
+    <div class="sha-box">
+      <strong>DUAL-CHANNEL DISTRIBUTION:</strong><br/>
+      &bull; <strong>Google Play Edition:</strong> Includes Zero-Install Offline HTML5 Web Bridge so bystanders without the app can join your optical/audio mesh in their browser.<br/>
+      &bull; <strong>Standalone Universal APK (arm64-v8a, armeabi-v7a, x86_64):</strong> Can beam its own full signed native <code>.apk</code> over LocalOnlyHotspot to other phones completely offline.
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>BEAM // 5 KM OPTICAL MODEM</h2>
+      <p>4-PPM LED Torch modulation (4/8 Hz HAL calibrated) for 1–5+ km night line-of-sight, VSync 4x4 RGBW Matrix for 30–300m bursts, C++20 NDK 240x240 ROI hand-shake stabilization, and Reed-Solomon RS(255,240) FEC.</p>
+    </div>
+    <div class="card">
+      <h2>PULSE // 15m/15s FIREFLY MESH</h2>
+      <p>Passively reads 1575.42 MHz GPS atomic time to wake all nearby nodes simultaneously for 15 seconds every 15 minutes (:00, :15, :30, :45), stretching battery life to 3–4+ days with a 50 MB / 72h Blind Mule Ring Buffer.</p>
+    </div>
+    <div class="card">
+      <h2>BRIDGE // WALKIE &amp; NOKIA 3310</h2>
+      <p>48 kHz 16-MFSK audio chirps (800–2300 Hz) carry 256-byte encrypted packets across cheap analog walkie-talkies at 5 dB SNR, plus a Goertzel DTMF decoder for vintage Nokia 3310 keypad coordinates.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 PHAROS Survival Mesh Project</span>
+    <span><a href="../../play-store-assets/privacy-policy.html">Zero-Telemetry Privacy Policy</a></span>
+  </footer>
+</body>
+</html>

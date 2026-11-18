@@ -1,0 +1,53 @@
+{
+  "appPackage": "org.pharos.mesh",
+  "targetSdk": 36,
+  "minSdk": 23,
+  "native16KbPageAligned": true,
+  "manifestAudit": {
+    "internetPermissionPresent": false,
+    "requestInstallPackagesPresentInPlayStore": false,
+    "prominentDisclosuresImplemented": [
+      "CAMERA",
+      "RECORD_AUDIO",
+      "ACCESS_FINE_LOCATION",
+      "NEARBY_WIFI_DEVICES",
+      "ACCESS_NOTIFICATION_POLICY"
+    ]
+  },
+  "googlePlayDataSafetyDeclaration": {
+    "collectsUserData": false,
+    "sharesUserDataWithThirdParties": false,
+    "ephemeralProcessingOnly": false,
+    "securityPractices": {
+      "dataEncryptedInTransit": true,
+      "encryptionAlgorithm": "XChaCha20-Poly1305 AEAD (256-bit) + SPAKE2 PAKE + Ed25519",
+      "userCanRequestDataDeletion": "Instantaneous on-device deletion via <100ms StrongBox/TEE Duress PIN wipe or app uninstall (zero cloud storage exists)"
+    }
+  },
+  "iarcContentRatingQuestionnaire": {
+    "category": "Utility / Productivity / Tools / Emergency Communication",
+    "violence": "None",
+    "sexuality": "None",
+    "language": "None",
+    "controlledSubstances": "None",
+    "userInteraction": "Peer-to-peer local encrypted radio/optical/audio exchange only (with 2-hop Web-of-Trust quarantine isolation)",
+    "sharesLocation": "Optional user-triggered tactical card GPS coordinate over local P2P only",
+    "unrestrictedWebAccess": false
+  },
+  "exportComplianceEncryption": {
+    "usesNonStandardCryptography": false,
+    "standardAlgorithms": ["XChaCha20-Poly1305 (RFC 8439)", "Ed25519 (RFC 8032)", "SPAKE2 (RFC 9382)", "Argon2id (RFC 9106)", "ECDSA P-256"],
+    "earClassification": "5D002 ENC Mass Market / Publicly Available Open-Source Exemption (740.17(b)(1))"
+  },
+  "appReviewDemoInstructions": {
+    "accountRequired": false,
+    "demoPinNormal": "2580",
+    "demoPinDuress": "9911",
+    "reviewerSteps": [
+      "1. Launch PHAROS on any device (Airplane Mode ON is supported and recommended).",
+      "2. On the BEAM tab, tap 'TRANSMIT 256B BEAM' to watch the 4x4 VSync Matrix transmit a 256-byte blind packet and repair simulated channel bit flips via Reed-Solomon RS(255,240) FEC.",
+      "3. On the PULSE tab, toggle between 'VERIFIED WoT' and 'QUARANTINE / SOS', view pins on the offline vector map, and tap 'PLAY CODEC2 (RAM)' to hear a 1200bps voice note decrypted strictly in RAM.",
+      "4. On the BRIDGE tab, tap 'START P2P HOTSPOT SERVER' to start the LocalOnlyHotspot Zero-Install Offline Web Node, or tap 'PTT MFSK + DTMF LOOPBACK' to test 48kHz walkie-talkie chirps at 5 dB SNR."
+    ]
+  }
+}

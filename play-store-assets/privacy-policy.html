@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PHAROS — Privacy Policy (Zero-Internet / Zero-Telemetry Architecture)</title>
+  <style>
+    body { background: #050505; color: #e0e0e0; font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; max-width: 820px; margin: 0 auto; padding: 32px 20px; }
+    h1, h2 { color: #ff2a2a; font-family: monospace; }
+    .box { background: #0f0808; border: 1px solid #ff2a2a; padding: 16px; margin: 20px 0; }
+    code { background: #1a1a1a; color: #ffb000; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+  <h1>PHAROS // PRIVACY POLICY</h1>
+  <p><strong>Effective Date:</strong> November 17, 2026 | <strong>Package ID:</strong> <code>org.pharos.mesh</code></p>
+
+  <div class="box">
+    <strong>Architectural Guarantee (Rule Zero):</strong> PHAROS does <strong>NOT</strong> request or declare the <code>android.permission.INTERNET</code> permission in its Android Manifest. It is physically and cryptographically impossible for PHAROS to transmit your personal data, location, audio, or camera frames to any cloud server, analytics endpoint, or third party.
+  </div>
+
+  <h2>1. Zero Data Collection &amp; Zero Sharing</h2>
+  <p>We collect <strong>0 bytes</strong> of personal data, telemetry, crash logs, advertising identifiers, or usage analytics. All tactical cards, voice clips, and cryptographic keys remain 100% on your physical device unless you explicitly transmit an encrypted 256-byte packet to a nearby peer over optical light, walkie-talkie audio, or local P2P radio.</p>
+
+  <h2>2. How On-Device Hardware Permissions Are Used</h2>
+  <ul>
+    <li><strong>Camera &amp; Torch (<code>android.permission.CAMERA</code>):</strong> Used strictly on-device to modulate the rear LED flashlight (4-PPM) and analyze the center <code>240x240</code> pixel aiming reticle at 30–60 fps to decode optical packets from another survivor's screen or flashlight. Camera frames are processed in volatile RAM and discarded immediately.</li>
+    <li><strong>Microphone (<code>android.permission.RECORD_AUDIO</code>):</strong> Used strictly on-device to demodulate 800–2,300 Hz MFSK walkie-talkie audio chirps, Nokia 3310 DTMF emergency keypad tones, and optional 10-second <code>Codec2</code> voice notes encrypted in RAM.</li>
+    <li><strong>Location / Passive GNSS (<code>android.permission.ACCESS_FINE_LOCATION</code> &amp; <code>NEARBY_WIFI_DEVICES</code>):</strong> Used passively on-device to read atomic UTC timestamps from GPS satellites (<code>1575.42 MHz</code>) to synchronize 15-minute Firefly wake bursts and enable local Wi-Fi Direct / BLE peer discovery.</li>
+  </ul>
+
+  <h2>3. Cryptographic Erasure &amp; Duress PIN</h2>
+  <p>All local data is encrypted via <code>XChaCha20-Poly1305</code> and bound to Android Hardware Keystore (<code>StrongBox</code> / <code>TEE</code>). Entering your configured Duress PIN executes cryptographic key destruction in <code>&lt;100ms</code>.</p>
+
+  <h2>4. Contact</h2>
+  <p>Security &amp; Privacy Engineering Team: <code>security@pharos-mesh.org</code></p>
+</body>
+</html>

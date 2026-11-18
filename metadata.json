@@ -1,0 +1,6 @@
+{
+  "name": "PHAROS",
+  "description": "Off-grid, zero-internet, zero-cloud Android survival communicator using optical modulation (BEAM), GPS-clocked micro-burst radio relaying (PULSE Firefly), and acoustic/walkie-talkie bridging (BRIDGE).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
